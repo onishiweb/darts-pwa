@@ -1,0 +1,14 @@
+.keypad {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.key {
+    width: calc(25vw);
+    height: calc(20vw);
+    background: transparent;
+    border-radius: 0;
+    border: 1px solid #aaa;
+    font-size: 20px;
+}
