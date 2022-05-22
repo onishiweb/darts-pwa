@@ -1,9 +1,13 @@
 import styles from '../styles/RemainingScore.module.scss'
 
-const RemainingScore = () => {
+interface IRemainingScoreProps {
+    remainingScore: number
+}
+
+const RemainingScore = ({ remainingScore } : IRemainingScoreProps) => {
     return (
         <div className={styles.score}>
-            <h2>501</h2>
+            <h2>{ remainingScore }</h2>
         </div>
     )
 }

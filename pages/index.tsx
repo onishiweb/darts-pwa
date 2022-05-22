@@ -5,23 +5,25 @@ import RoundScore from '../components/RoundScore'
 import styles from '../styles/Home.module.scss'
 
 export default function Home() {
-  const [roundScore, setRoundScore] = useState<number | undefined>(undefined)
+  const [roundScore, setRoundScore] = useState<number>(0)
   const [dartCount, setDartCount] = useState<number>(0)
-  const [keyPadDisabled, setKeyPadDisabled] = useState<boolean>(false)
+  const [roundComplete, setRoundComplete] = useState<boolean>(false)
+  const [remainingScore, setRemainingScore] = useState<number>(501)
 
   const setDartScore = (score: number) => {
-    if (!roundScore) {
-      setRoundScore(score)
-    } else {
-      setRoundScore(roundScore + score)
-    }
-
+    setRoundScore(roundScore + score)
     setDartCount(dartCount + 1)
+  }
+
+  const submitRoundScore = () => {
+    setRemainingScore(remainingScore - roundScore)
+    setRoundScore(0)
+    setRoundComplete(false)
   }
 
   useEffect(() => {
     if (dartCount === 3) {
-      setKeyPadDisabled(true)
+      setRoundComplete(true)
       setDartCount(0)
     }
   }, [dartCount])
@@ -29,9 +31,9 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <RemainingScore />
-        <RoundScore score={roundScore && roundScore} />
-        <KeyPad setDartScore={setDartScore} disabled={keyPadDisabled} />
+        <RemainingScore remainingScore={remainingScore} />
+        <RoundScore score={roundScore && roundScore} submitRound={submitRoundScore} showSubmit={roundComplete} />
+        <KeyPad setDartScore={setDartScore} disabled={roundComplete} />
       </main>
     </div>
   )
